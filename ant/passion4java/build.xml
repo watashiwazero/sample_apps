@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ======================================================================
+     Oct 19, 2009 10:57:23 AM
+
+     AntHelloWorld
+     This is a simple build file to run this example file
+
+     myousuff
+     ====================================================================== -->
+<project name="AntHelloWorld" default="main-target" basedir=".">
+    <description>
+    	This is a simple build file to run this example file
+    </description>
+
+	<!-- Below are property files which are used to configure the path which may change based on the
+	Environment. Its is good to place all the values as property which may change based on the machine environments-->
+	<property name="source.dir" value="src"/>
+	<property name="build.dir" value="build"/>
+	<property name="classes.dir" value="${build.dir}/classes"/>
+	<property name="main-class-name" value="com.passion4java.helloworld.ant.AntHelloWorld"/>
+
+
+    <!-- =================================
+          target: main-target : this is a main target which is similar to main method
+          in java classes. because it is the entry point for ant to start building.
+         ================================= -->
+    <target name="main-target" depends="clean,build" description="--> description">
+    	<!-- creating a jar file-->
+    	<jar basedir="${classes.dir}" destfile="${ant.project.name}.jar">
+    		<!-- adding the main class to the manifest file-->
+    		<manifest>
+    			<attribute name="Main-Class" value="${main-class-name}"/>
+    		</manifest>
+    	</jar>
+
+    	<delete dir="${build.dir}"/>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: clean
+         - - - - - - - - - - - - - - - - - -->
+    <target name="clean">
+		<delete dir="${build.dir}"/>
+    	<delete dir="${classes.dir}"/>
+    	<delete file="${ant.project.name}.jar"></delete>
+    </target>
+
+	<!--target:build java classes	-->
+
+	<target name="build">
+    	<mkdir dir="${build.dir}"/>
+    	<mkdir dir="${classes.dir}"/>
+		<javac srcdir="${source.dir}" destdir="${classes.dir}"/>
+	</target>
+</project>
+
